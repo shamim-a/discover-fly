@@ -20,7 +20,7 @@
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a target="_blank" href="https://facebook.com/shamimahammed.sa">Contact</a></li>
                 <li><a class="active" href="#">Sign Up</a></li>
             </ul>
         </nav>
@@ -28,7 +28,8 @@
 
     <!--Booking Section-->
     <main class="main-content container">
-        <div class="booking-form">
+
+        <div id="booking" class="booking-form">
             <h3>Booking Flights</h3>
             <div class="input-group">
                 <label for="">Flying From</label>
@@ -41,7 +42,7 @@
             <div class="inputs">
                 <div class="input-group">
                     <label" for="">Departure</label>
-                    <input class="inp-style" type="date" name="">
+                        <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
                     <label for="">Return</label>
@@ -51,29 +52,34 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="firstClassFly-count" class="inp-style inp-width" type="number" name="" value="1">
                 </div>
-                <div class="plus-minus-btn">
-                    <p>+ -</p>
+                <div>
+                    <button onclick="clickHandler('firstClassFly', true)" class="plus-minus-btn">+</button>
+                    <button onclick="clickHandler('firstClassFly', false)" class="plus-minus-btn">-</button>
                 </div>
             </div>
-            
+
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="economyClassFly-count" class="inp-style inp-width" type="number" name="" value="1">
                 </div>
-                <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                <div>
+                    <button onclick="clickHandler('economyClassFly', true)" class="plus-minus-btn">+</button>
+                    <button onclick="clickHandler('economyClassFly', false)" class="plus-minus-btn">-</button>
                 </div>
             </div>
             <div class="calculations">
+                <div>
+
+                </div>
                 <div class="amount">
                     <div class="left">
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p id="subTotal">$250.00</p>
                     </div>
                 </div>
 
@@ -82,7 +88,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p id="vat-tax">$25.00</p>
                     </div>
                 </div>
                 <hr>
@@ -91,20 +97,129 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p id="total-price">$275</p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button onclick="bookNowBtn()" class="btn-style">Book Now</button>
         </div>
 
-        <div class="booking-content">
+        <!-- next pages elements -->
+
+        <div id="calculation" class="calculations">
+            <h2>Invoice</h2>
+            <div class="invoice">
+                <div class="amount">
+                    <div class="left">
+                        <p>First Class ($150)</p>
+                    </div>
+                    <div class="right">
+                        <p id="next-firstClassFly-count">1</p>
+                    </div>
+                </div>
+                <div class="amount">
+                    <div class="left">
+                        <p>Economy ($100)</p>
+                    </div>
+                    <div class="right">
+                        <p id="next-economyClassFly-count">1</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="new-subTotal">$250.00</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="newVat-tax">$25.00</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="newTotal-price">$275</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="booking-decription" class="booking-content">
             <h1>discover <br> around the world</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga
+                laborumalias
+                veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt
+                nobise
+                voluptatibus quam</p>
         </div>
-    </section>
 
-    <!--Thank You-->
+
+
+        <!--Thank You-->
+
+        <!-- Scripting is here -->
+        <script>
+            function clickHandler(flyClasses, flyTicketQuantity) {
+
+                const flyInputs = document.getElementById(flyClasses + '-count');
+                const flyCount = parseInt(flyInputs.value);
+                let flyNewCount = flyCount;
+                // const flyCountAdd = parseInt(flyCount.value) + 1;
+                if (flyTicketQuantity == true) {
+                    flyNewCount = flyCount + 1;
+                }
+                if (flyTicketQuantity == false && flyCount > 0) {
+                    flyNewCount = flyCount - 1;
+                }
+                flyInputs.value = flyNewCount;
+                // set condition for the invoice show 
+                let nextPageFlyCount = 0;
+                if (flyClasses == "firstClassFly") {
+                    nextPageFlyCount = flyNewCount;
+                }
+                if (flyClasses == "economyClassFly" && flyCount > 0) {
+                    nextPageFlyCount = flyNewCount;
+                }
+                document.getElementById('next-' + flyClasses + '-count').innerText = nextPageFlyCount;
+                // Calculating sub Total 
+                const subTotal = getInputfly('firstClassFly') * 150 + getInputfly('economyClassFly') * 100;
+                document.getElementById('subTotal').innerText = '$' + subTotal;
+                document.getElementById('new-subTotal').innerText = '$' + subTotal;
+                // Charge 10% vat including
+                const vatTax = subTotal * 0.1;
+                document.getElementById('vat-tax').innerText = '$' + Math.round(vatTax);
+                document.getElementById('newVat-tax').innerText = '$' + Math.round(vatTax);
+                // Total Calculation
+                const totalSum = vatTax + subTotal;
+                document.getElementById('total-price').innerText = '$' + totalSum;
+                document.getElementById('newTotal-price').innerText = '$' + totalSum;
+
+            }
+
+            function getInputfly(flyClasses) {
+                const flyNewInput = document.getElementById(flyClasses + '-count');
+                const flyNewCount = parseInt(flyNewInput.value);
+                return flyNewCount;
+            }
+            function bookNowBtn() {
+                document.getElementById('booking').style.display = 'none';
+                document.getElementById('booking-decription').style.display = 'none';
+                const purchesConfirmation = document.getElementById('calculation');
+                purchesConfirmation.style.display = 'block';
+            }
+        </script>
 </body>
 
 </html>

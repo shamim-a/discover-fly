@@ -67,10 +67,12 @@ nav ul li a:hover, a.active{
 }
 .plus-minus-btn{
     color: #3352F2;
-    font-size: 30px;
+    border: none;
+    background-color: #e7f9ff;
+    font-size: 26px;
     padding: 2px;
-    margin-top: 10px;
-    word-spacing: 20px;
+    margin-top: 18px;
+    width: 30px;
 }
 .booking-form  .calculations{
     margin: 10px 0;
@@ -120,3 +122,16 @@ nav ul li a:hover, a.active{
     display: flex;
     justify-content: space-between;
 }
+#calculation {
+    display: none;
+    background-color: #edffff;
+    border-radius: 5px;
+}
+#calculation h2{
+    text-align: center;
+    margin-top: 5px;
+}
+.invoice{
+    padding: 12px;
+}
+
